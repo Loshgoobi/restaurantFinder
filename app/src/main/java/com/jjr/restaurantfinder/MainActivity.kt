@@ -1,5 +1,6 @@
 package com.jjr.restaurantfinder
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -123,21 +124,18 @@ class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse,
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_home -> {
-                // Handle the camera action
+                val intent = Intent(this@MainActivity, MainActivity::class.java)
+                startActivity(intent)
             }
-            R.id.nav_gallery -> {
+            R.id.nav_search -> {
+                val intent = Intent(this@MainActivity, SearchActivity::class.java)
+                startActivity(intent)
 
             }
             R.id.nav_slideshow -> {
 
             }
             R.id.nav_tools -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
 
             }
         }
