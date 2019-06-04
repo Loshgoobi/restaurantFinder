@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse,
                 startActivity(intent)
 
             }
-            R.id.nav_slideshow -> {
+            R.id.nav_map -> {
                 val intent = Intent(this@MainActivity, MapsActivity::class.java)
                 startActivity(intent)
             }
