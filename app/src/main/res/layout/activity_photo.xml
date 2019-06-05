@@ -12,25 +12,47 @@
         <ImageView
                 android:id="@+id/photoImageView"
                 android:layout_width="match_parent"
-                android:layout_height="363dp"
+                android:layout_height="342dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"/>
 
         <TextView
-                android:id="@+id/photoDescription"
+                android:id="@+id/restaurantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="6dp" android:textSize="24sp"/>
+        <TextView
+                android:id="@+id/restaurantAdress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginRight="6dp"/>
 
+
+        <RatingBar
+                android:id="@+id/ratingBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:isIndicator="true"
+                android:stepSize="1"/>
         <android.support.design.widget.FloatingActionButton
                 android:id="@+id/callButton"
                 android:layout_width="74dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/fab_margin"
-                app:srcCompat="@drawable/ic_call" />
+                app:srcCompat="@drawable/ic_call"/>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewDish"
+                android:layout_width="match_parent"
+                android:layout_height="172dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="6dp"
+                android:scrollbars="vertical"/>
 
 
     </LinearLayout>

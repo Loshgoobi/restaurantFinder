@@ -13,8 +13,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.jjr.restaurantfinder.*
-import com.jjr.restaurantfinder.model.Photo
+import com.jjr.restaurantfinder.R
+import com.jjr.restaurantfinder.model.Restaurant
 import com.jjr.restaurantfinder.utils.ImageRequester
 import com.jjr.restaurantfinder.utils.RecyclerAdapter
 import kotlinx.android.synthetic.main.content_main.*
@@ -22,7 +22,7 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse, NavigationView.OnNavigationItemSelectedListener  {
 
-    private var photosList: MutableList<Photo> = mutableListOf()
+    private var photosList: MutableList<Restaurant> = mutableListOf()
     private lateinit var imageRequester: ImageRequester
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: RecyclerAdapter
@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse,
         adapter = RecyclerAdapter(photosList)
         recyclerView.adapter = adapter
         setRecyclerViewScrollListener()
-        gridLayoutManager = GridLayoutManager(this, 2)
 
         imageRequester = ImageRequester(this)
 
@@ -81,16 +80,16 @@ class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse,
 
     private fun requestPhoto() {
         try {
-            imageRequester.getPhoto()
+            imageRequester.getRestaurant()
         } catch (e: IOException) {
             e.printStackTrace()
         }
 
     }
 
-    override fun receivedNewPhoto(newPhoto: Photo) {
+    override fun receivedNewRestaurant(newRestaurant: MutableList<Restaurant>) {
         runOnUiThread {
-            photosList.add(newPhoto)
+            photosList = newRestaurant
             adapter.notifyItemInserted(photosList.size-1)
         }
     }

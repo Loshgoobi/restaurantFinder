@@ -3,11 +3,12 @@ package com.jjr.restaurantfinder.utils
 import android.app.Activity
 import android.content.Context
 import android.net.Uri.Builder
-import com.jjr.restaurantfinder.model.Photo
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.jjr.restaurantfinder.R
+import com.jjr.restaurantfinder.model.Restaurant
 import okhttp3.*
 import org.json.JSONException
-import org.json.JSONObject
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,9 +16,10 @@ import java.util.*
 class ImageRequester(listeningActivity: Activity) {
 
     interface ImageRequesterResponse {
-        fun receivedNewPhoto(newPhoto: Photo)
+        fun receivedNewRestaurant(newRestaurant: MutableList<Restaurant>)
     }
 
+    val gson = GsonBuilder().setPrettyPrinting().create()
     private val calendar: Calendar = Calendar.getInstance()
     private val dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     private val responseListener: ImageRequesterResponse
@@ -32,7 +34,7 @@ class ImageRequester(listeningActivity: Activity) {
         client = OkHttpClient()
     }
 
-    fun getPhoto() {
+    fun getRestaurant() {
 
         val date = dateFormat.format(calendar.time)
 
@@ -59,16 +61,16 @@ class ImageRequester(listeningActivity: Activity) {
             override fun onResponse(call: Call, response: Response) {
 
                 try {
-                    val photoJSON = JSONObject(response.body()!!.string())
+                    val photoJSON = response.body()!!.string()
 
-                    calendar.add(Calendar.DAY_OF_YEAR, -1)
+                    var restaurant: MutableList<Restaurant>
+                    restaurant = gson.fromJson(photoJSON, object : TypeToken<MutableList<Restaurant>>() {}.type)
 
-                    if (photoJSON.getString(MEDIA_TYPE_KEY) != MEDIA_TYPE_VIDEO_VALUE) {
-                        val receivedPhoto = Photo(photoJSON)
-                        responseListener.receivedNewPhoto(receivedPhoto)
+                    if (restaurant != null) {
+                        responseListener.receivedNewRestaurant(restaurant)
                         isLoadingData = false
                     } else {
-                        getPhoto()
+                        getRestaurant()
                     }
                 } catch (e: JSONException) {
                     isLoadingData = false
@@ -80,12 +82,10 @@ class ImageRequester(listeningActivity: Activity) {
     }
 
     companion object {
-        private val MEDIA_TYPE_KEY = "media_type"
-        private val MEDIA_TYPE_VIDEO_VALUE = "video"
         private val URL_SCHEME = "https"
         private val URL_AUTHORITY = "api.nasa.gov"
-        private val URL_PATH_1 = "planetary"
-        private val URL_PATH_2 = "apod"
+        private val URL_PATH_1 = "api"
+        private val URL_PATH_2 = ""
         private val URL_QUERY_PARAM_DATE_KEY = "date"
         private val URL_QUERY_PARAM_API_KEY = "api_key"
     }

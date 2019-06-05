@@ -8,13 +8,12 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.jakewharton.rxbinding2.widget.textChanges
-import com.jjr.restaurantfinder.*
-import com.jjr.restaurantfinder.model.Photo
+import com.jjr.restaurantfinder.R
+import com.jjr.restaurantfinder.model.Restaurant
 import com.jjr.restaurantfinder.utils.ImageRequester
 import com.jjr.restaurantfinder.utils.PostsDiffUtilCallback
 import com.jjr.restaurantfinder.utils.RecyclerAdapter
 import com.jjr.restaurantfinder.utils.SearchViewModel
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -26,7 +25,7 @@ import java.util.concurrent.TimeUnit
 
 class SearchActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse {
 
-    private val photosList: MutableList<Photo> = mutableListOf()
+    private var photosList: MutableList<Restaurant> = mutableListOf()
     private lateinit var imageRequester: ImageRequester
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: RecyclerAdapter
@@ -63,7 +62,6 @@ class SearchActivity : AppCompatActivity(), ImageRequester.ImageRequesterRespons
         imageRequester = ImageRequester(this)
 
         requestPhoto()
-        searchViewModel.oldFilteredPhotos.addAll(photosList)
 
 //        searchInput
 //            .textChanges()
@@ -112,7 +110,6 @@ class SearchActivity : AppCompatActivity(), ImageRequester.ImageRequesterRespons
                 val totalItemCount = recyclerView.layoutManager!!.itemCount
                 if (!imageRequester.isLoadingData && totalItemCount == lastVisibleItemPosition + 1) {
                     requestPhoto()
-                    searchViewModel.oldFilteredPhotos.addAll(photosList)
                 }
             }
         })
@@ -120,17 +117,17 @@ class SearchActivity : AppCompatActivity(), ImageRequester.ImageRequesterRespons
 
     private fun requestPhoto() {
         try {
-            imageRequester.getPhoto()
+            imageRequester.getRestaurant()
         } catch (e: IOException) {
             e.printStackTrace()
         }
 
     }
 
-    override fun receivedNewPhoto(newPhoto: Photo) {
+    override fun receivedNewRestaurant(newRestaurant: MutableList<Restaurant>) {
         runOnUiThread {
-            photosList.add(newPhoto)
-            adapter.notifyItemInserted(photosList.size-1)
+            photosList = newRestaurant
+            adapter.notifyItemInserted(1)
         }
     }
 
