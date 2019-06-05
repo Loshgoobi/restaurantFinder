@@ -1,4 +1,4 @@
-package com.jjr.restaurantfinder
+package com.jjr.restaurantfinder.activities
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -7,6 +7,8 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.jjr.restaurantfinder.model.Photo
+import com.jjr.restaurantfinder.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_photo.*
 import org.jetbrains.anko.makeCall
@@ -22,7 +24,7 @@ class PhotoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_photo)
 
         selectedPhoto = intent.getSerializableExtra(PHOTO_KEY) as Photo
-        Picasso.with(this).load(selectedPhoto?.url).into(photoImageView)
+        Picasso.get().load(selectedPhoto?.url).into(photoImageView)
 
         photoDescription?.text = selectedPhoto?.explanation
         makeRequest()

@@ -1,4 +1,4 @@
-package com.jjr.restaurantfinder
+package com.jjr.restaurantfinder.utils
 
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater

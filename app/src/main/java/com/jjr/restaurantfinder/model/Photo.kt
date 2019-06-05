@@ -1,4 +1,4 @@
-package com.jjr.restaurantfinder
+package com.jjr.restaurantfinder.model
 
 import org.json.JSONException
 import org.json.JSONObject
@@ -9,6 +9,7 @@ import java.util.*
 
 class Photo(photoJSON: JSONObject) : Serializable {
 
+
     private lateinit var photoDate: String
     lateinit var humanDate: String
         private set
@@ -17,8 +18,11 @@ class Photo(photoJSON: JSONObject) : Serializable {
     lateinit var url: String
         private set
 
+    var id: Int = 0
+
     init {
         try {
+            id += 1
             photoDate = photoJSON.getString(PHOTO_DATE)
             humanDate = convertDateToHumanDate()
             explanation = photoJSON.getString(PHOTO_EXPLANATION)

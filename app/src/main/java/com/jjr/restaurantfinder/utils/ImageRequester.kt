@@ -1,8 +1,10 @@
-package com.jjr.restaurantfinder
+package com.jjr.restaurantfinder.utils
 
 import android.app.Activity
 import android.content.Context
 import android.net.Uri.Builder
+import com.jjr.restaurantfinder.model.Photo
+import com.jjr.restaurantfinder.R
 import okhttp3.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -39,7 +41,10 @@ class ImageRequester(listeningActivity: Activity) {
             .appendPath(URL_PATH_1)
             .appendPath(URL_PATH_2)
             .appendQueryParameter(URL_QUERY_PARAM_DATE_KEY, date)
-            .appendQueryParameter(URL_QUERY_PARAM_API_KEY, context.getString(R.string.api_key))
+            .appendQueryParameter(
+                URL_QUERY_PARAM_API_KEY, context.getString(
+                    R.string.api_key
+                ))
             .build().toString()
 
         val request = Request.Builder().url(urlRequest).build()

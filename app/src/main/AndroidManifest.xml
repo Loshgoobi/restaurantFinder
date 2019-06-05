@@ -32,16 +32,16 @@
                 android:value="@string/google_maps_key"/>
 
         <activity
-                android:name=".MapsActivity"
+                android:name=".activities.MapsActivity"
                 android:label="@string/title_activity_maps">
         </activity>
         <activity
-                android:name=".SearchActivity"
+                android:name=".activities.SearchActivity"
                 android:label="@string/title_activity_search"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".MainActivity"
+                android:name=".activities.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -50,7 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".PhotoActivity"/>
+        <activity android:name=".activities.PhotoActivity"/>
     </application>
 
 </manifest>

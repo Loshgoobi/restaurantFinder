@@ -1,4 +1,4 @@
-package com.jjr.restaurantfinder
+package com.jjr.restaurantfinder.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,13 +13,16 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import com.jjr.restaurantfinder.*
+import com.jjr.restaurantfinder.model.Photo
+import com.jjr.restaurantfinder.utils.ImageRequester
+import com.jjr.restaurantfinder.utils.RecyclerAdapter
 import kotlinx.android.synthetic.main.content_main.*
 import java.io.IOException
-import java.util.*
 
 class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse, NavigationView.OnNavigationItemSelectedListener  {
 
-    private var photosList: ArrayList<Photo> = ArrayList()
+    private var photosList: MutableList<Photo> = mutableListOf()
     private lateinit var imageRequester: ImageRequester
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: RecyclerAdapter
@@ -43,7 +46,9 @@ class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse,
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawerLayout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -58,6 +63,8 @@ class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse,
         gridLayoutManager = GridLayoutManager(this, 2)
 
         imageRequester = ImageRequester(this)
+
+        requestPhoto()
     }
 
     private fun setRecyclerViewScrollListener() {
